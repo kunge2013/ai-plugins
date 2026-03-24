@@ -1,0 +1,69 @@
+{
+  "name": "vscode-translate-plugin",
+  "displayName": "翻译",
+  "description": "将选中的英文 Markdown 文本格式化为翻译提示词，方便调用大模型进行翻译",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:translation.translate"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "translation.translate",
+        "title": "翻译"
+      }
+    ],
+    "configuration": {
+      "title": "翻译",
+      "properties": {
+        "translation.promptTemplate": {
+          "type": "string",
+          "default": "请将{xx}翻译成为中文",
+          "description": "翻译提示词模板，使用 {xx} 作为选中文本的占位符"
+        },
+        "translation.externalLinkName": {
+          "type": "string",
+          "default": "DeepSeek 问答",
+          "description": "外部链接按钮名称，留空则不显示"
+        },
+        "translation.externalLinkUrl": {
+          "type": "string",
+          "default": "https://chat.deepseek.com/",
+          "description": "外部链接 URL，例如 https://chat.deepseek.com/ ，链接参数会自动追加"
+        },
+        "translation.externalLinkParam": {
+          "type": "string",
+          "default": "prompt",
+          "description": "URL 参数名称，提示词会作为参数值自动 URL 编码后拼接"
+        }
+      }
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "translation.translate",
+          "group": "navigation",
+          "when": "editorHasSelection"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
+    "watch": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --watch"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@types/node": "^20.14.0",
+    "typescript": "^5.4.5",
+    "esbuild": "^0.21.4"
+  }
+}
