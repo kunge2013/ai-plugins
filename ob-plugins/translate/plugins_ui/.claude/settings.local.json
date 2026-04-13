@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm run build)",
+      "Bash(dir *.js:*)",
+      "Bash(dir:*)",
+      "Bash(Get-ChildItem:*)",
+      "Bash(Select-Object Name, Length)",
+      "Bash(node:*)",
+      "Bash(npm --version)",
+      "Bash(npm run build:*)",
+      "Bash(npx esbuild:*)",
+      "Bash(npm clean-install)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "Bash(tsc:*)"
+    ]
+  }
+}

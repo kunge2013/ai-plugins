@@ -1,0 +1,11 @@
+node_modules/
+main.js
+main.js.map
+.obsidian/
+*.log
+.env
+.DS_Store
+dist/
+coverage/
+.vscode/
+.idea/
