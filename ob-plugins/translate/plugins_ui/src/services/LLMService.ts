@@ -31,4 +31,9 @@ export interface LLMService {
      * Get last error message
      */
     getLastError(): string | null;
+
+    /**
+     * Abort the current streaming request
+     */
+    abort?(): void;
 }

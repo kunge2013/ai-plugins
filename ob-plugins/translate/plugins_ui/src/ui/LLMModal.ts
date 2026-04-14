@@ -38,8 +38,12 @@ export class LLMModal extends Modal {
 
     onClose(): void {
         this.component.unload();
-        this.fullResponse = '';
         this.isStreaming = false;
+        // Abort any ongoing request
+        if (this.options.service.abort) {
+            this.options.service.abort();
+        }
+        this.fullResponse = '';
     }
 
     private renderUI(): void {

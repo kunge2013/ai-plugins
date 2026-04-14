@@ -55,6 +55,7 @@
 /* Modal content */
 .llm-modal-content {
     padding: 0;
+	background-color: #e9cca6;
 }
 
 /* Query preview */

@@ -9,6 +9,7 @@ import { LLMModal } from '../ui/LLMModal';
 import { LLMService } from '../services/LLMService';
 import { OpenAIService } from '../services/OpenAIService';
 import { AnthropicService } from '../services/AnthropicService';
+import { DashscopeService } from '../services/DashscopeService';
 import { LocalService } from '../services/LocalService';
 import { createLogger } from '../utils/logger';
 
@@ -102,6 +103,8 @@ export class LLMContextMenuPlugin extends Plugin {
                 return new OpenAIService(this.settings.openai);
             case 'anthropic':
                 return new AnthropicService(this.settings.anthropic);
+            case 'dashscope':
+                return new DashscopeService(this.settings.dashscope);
             case 'local':
                 return new LocalService(this.settings.local);
             default:

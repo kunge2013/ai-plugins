@@ -34,6 +34,7 @@ export class LLMPluginSettingTab extends PluginSettingTab {
             dropdown
                 .addOption('openai', 'OpenAI')
                 .addOption('anthropic', 'Anthropic')
+                .addOption('dashscope', 'Alibaba Cloud Dashscope')
                 .addOption('local', 'Local (Ollama)')
                 .setValue(this.plugin.settings.defaultProvider)
                 .onChange(async (value: LLMProvider) => {
@@ -183,6 +184,71 @@ export class LLMPluginSettingTab extends PluginSettingTab {
                 .setDynamicTooltip()
                 .onChange(async (value: number) => {
                     this.plugin.settings.anthropic.temperature = value;
+                    await this.plugin.saveSettings();
+                });
+        });
+
+        containerEl.createEl('h3', { text: 'Alibaba Cloud Dashscope (通义千问) Settings' });
+
+        // API Key
+        const dashscopeApiKeySetting = new Setting(containerEl);
+        dashscopeApiKeySetting
+            .setName('API Key')
+            .setDesc('Dashscope API Key, get from https://dashscope.console.aliyun.com/');
+        dashscopeApiKeySetting.addText(text => {
+            text
+                .setPlaceholder('sk-...')
+                .setValue(this.plugin.settings.dashscope.apiKey)
+                .onChange(async (value: string) => {
+                    this.plugin.settings.dashscope.apiKey = value.trim();
+                    await this.plugin.saveSettings();
+                });
+            text.inputEl.type = 'password';
+        });
+
+        // Model
+        const dashscopeModelSetting = new Setting(containerEl);
+        dashscopeModelSetting
+            .setName('Model')
+            .setDesc('Model name, e.g. qwen-max, qwen-plus, qwen-turbo');
+        dashscopeModelSetting.addText(text => {
+            text
+                .setPlaceholder('qwen-max')
+                .setValue(this.plugin.settings.dashscope.model)
+                .onChange(async (value: string) => {
+                    this.plugin.settings.dashscope.model = value.trim();
+                    await this.plugin.saveSettings();
+                });
+        });
+
+        // Max Tokens
+        const dashscopeMaxTokensSetting = new Setting(containerEl);
+        dashscopeMaxTokensSetting
+            .setName('Max Tokens')
+            .setDesc('Maximum number of tokens in the response');
+        dashscopeMaxTokensSetting.addSlider(slider => {
+            slider
+                .setLimits(256, 16384, 256)
+                .setValue(this.plugin.settings.dashscope.maxTokens)
+                .setDynamicTooltip()
+                .onChange(async (value: number) => {
+                    this.plugin.settings.dashscope.maxTokens = value;
+                    await this.plugin.saveSettings();
+                });
+        });
+
+        // Temperature
+        const dashscopeTempSetting = new Setting(containerEl);
+        dashscopeTempSetting
+            .setName('Temperature')
+            .setDesc('Generation temperature - higher = more creative, lower = more focused');
+        dashscopeTempSetting.addSlider(slider => {
+            slider
+                .setLimits(0, 2, 0.1)
+                .setValue(this.plugin.settings.dashscope.temperature)
+                .setDynamicTooltip()
+                .onChange(async (value: number) => {
+                    this.plugin.settings.dashscope.temperature = value;
                     await this.plugin.saveSettings();
                 });
         });

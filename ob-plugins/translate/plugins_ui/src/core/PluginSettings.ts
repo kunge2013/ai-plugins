@@ -2,7 +2,7 @@
  * Plugin settings definition and default values
  */
 
-export type LLMProvider = 'openai' | 'anthropic' | 'local';
+export type LLMProvider = 'openai' | 'anthropic' | 'dashscope' | 'local';
 
 export interface OpenAISettings {
     apiKey: string;
@@ -13,6 +13,13 @@ export interface OpenAISettings {
 }
 
 export interface AnthropicSettings {
+    apiKey: string;
+    model: string;
+    maxTokens: number;
+    temperature: number;
+}
+
+export interface DashscopeSettings {
     apiKey: string;
     model: string;
     maxTokens: number;
@@ -38,6 +45,7 @@ export interface LLMPluginSettings {
     defaultProvider: LLMProvider;
     openai: OpenAISettings;
     anthropic: AnthropicSettings;
+    dashscope: DashscopeSettings;
     local: LocalSettings;
     ui: UISettings;
     systemPrompt: string;
@@ -55,6 +63,12 @@ export const DEFAULT_SETTINGS: LLMPluginSettings = {
     anthropic: {
         apiKey: '',
         model: 'claude-3-5-sonnet-20241022',
+        maxTokens: 4096,
+        temperature: 0.7,
+    },
+    dashscope: {
+        apiKey: '',
+        model: 'qwen-max',
         maxTokens: 4096,
         temperature: 0.7,
     },
